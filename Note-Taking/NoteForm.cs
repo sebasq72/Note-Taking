@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Note_Taking.Data;
+using System;
 using System.Data;
 using System.Text.Json.Serialization;
 
@@ -7,9 +8,17 @@ namespace Note_Taking
 {
     public partial class NoteForm : Form
     {
-
+        const string filePath = "storage.json";
         DataTable table;
         List<NoteEntry> lstNoteEntries;
+
+        public int GrvNotesSelectedRowIndex
+        {
+            get { return GrvNotes.CurrentCell.RowIndex; }
+        }
+
+
+
 
         public NoteForm()
         {
@@ -38,21 +47,40 @@ namespace Note_Taking
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
+            if (table.Rows.Count > 0)
+            {
+                ClearTextBox();
 
+                table.Rows.RemoveAt(GrvNotesSelectedRowIndex);
+
+                if (GrvNotes.Rows.Count > 0)
+                {
+                    if (GrvNotesSelectedRowIndex > GrvNotes.Rows.Count)
+                    {
+                        GrvNotes.Rows[GrvNotes.Rows.Count - 1].Selected = true;
+                    }
+                    else
+                    {
+                        GrvNotes.Rows[GrvNotesSelectedRowIndex].Selected = true;
+                    }
+                }
+
+            }
         }
 
         private void BtnRead_Click(object sender, EventArgs e)
         {
             if (table.Rows.Count > 0)
             {
-                int index = GrvNotes.CurrentCell.RowIndex;
-
-                TxtTitle.Text = table.Rows[index].ItemArray[1].ToString();
-                TxtNote.Text = table.Rows[index].ItemArray[2].ToString();
+                TxtTitle.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[1].ToString();
+                TxtNote.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[2].ToString();
             }
         }
 
-
+        private void NoteForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveDataToJsonFile();
+        }
 
         #endregion
 
@@ -83,9 +111,7 @@ namespace Note_Taking
 
         private void LoadDataFromJsonFile()
         {
-            string filePath = "storage.json";
-
-            if(!File.Exists(filePath))
+            if (!File.Exists(filePath))
             {
                 File.WriteAllText(filePath, "[]");
             }
@@ -103,10 +129,30 @@ namespace Note_Taking
         }
         private void SaveDataToJsonFile()
         {
+            lstNoteEntries = new List<NoteEntry>();
 
+            foreach (DataGridViewRow row in GrvNotes.Rows)
+            {
+                if (!row.IsNewRow)
+                {
+                    NoteEntry entry = new NoteEntry
+                    {
+                        Id = row.Cells[0].Value.ToString(),
+                        Title = row.Cells[1].Value.ToString(),
+                        Message = row.Cells[2].Value.ToString(),
+                    };
+
+                    lstNoteEntries.Add(entry);
+                }
+            }
+
+            string json = JsonConvert.SerializeObject(lstNoteEntries, Formatting.Indented);
+
+            File.WriteAllText(filePath, json);
         }
 
         #endregion
+
 
     }
 }

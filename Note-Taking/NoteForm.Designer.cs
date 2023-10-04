@@ -42,7 +42,7 @@
             // 
             // BtnSave
             // 
-            BtnSave.Location = new Point(294, 331);
+            BtnSave.Location = new Point(448, 330);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(75, 23);
             BtnSave.TabIndex = 0;
@@ -52,7 +52,7 @@
             // 
             // BtnDelete
             // 
-            BtnDelete.Location = new Point(132, 331);
+            BtnDelete.Location = new Point(581, 330);
             BtnDelete.Name = "BtnDelete";
             BtnDelete.Size = new Size(75, 23);
             BtnDelete.TabIndex = 1;
@@ -62,7 +62,7 @@
             // 
             // BtnNew
             // 
-            BtnNew.Location = new Point(51, 331);
+            BtnNew.Location = new Point(51, 12);
             BtnNew.Name = "BtnNew";
             BtnNew.Size = new Size(75, 23);
             BtnNew.TabIndex = 2;
@@ -105,16 +105,19 @@
             // 
             // GrvNotes
             // 
+            GrvNotes.AllowUserToAddRows = false;
+            GrvNotes.AllowUserToDeleteRows = false;
             GrvNotes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             GrvNotes.Location = new Point(367, 56);
             GrvNotes.Name = "GrvNotes";
+            GrvNotes.ReadOnly = true;
             GrvNotes.RowTemplate.Height = 25;
             GrvNotes.Size = new Size(289, 236);
             GrvNotes.TabIndex = 5;
             // 
             // BtnRead
             // 
-            BtnRead.Location = new Point(213, 331);
+            BtnRead.Location = new Point(367, 330);
             BtnRead.Name = "BtnRead";
             BtnRead.Size = new Size(75, 23);
             BtnRead.TabIndex = 6;
@@ -126,7 +129,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(668, 406);
+            ClientSize = new Size(668, 369);
             Controls.Add(BtnRead);
             Controls.Add(GrvNotes);
             Controls.Add(TxtNote);
@@ -138,6 +141,7 @@
             Controls.Add(BtnSave);
             Name = "NoteForm";
             Text = "Notes";
+            FormClosing += NoteForm_FormClosing;
             Load += NoteForm_Load;
             ((System.ComponentModel.ISupportInitialize)GrvNotes).EndInit();
             ResumeLayout(false);
