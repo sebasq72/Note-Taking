@@ -37,6 +37,7 @@
             TxtNote = new TextBox();
             GrvNotes = new DataGridView();
             BtnRead = new Button();
+            LblId = new Label();
             ((System.ComponentModel.ISupportInitialize)GrvNotes).BeginInit();
             SuspendLayout();
             // 
@@ -100,6 +101,7 @@
             TxtNote.Location = new Point(51, 82);
             TxtNote.Multiline = true;
             TxtNote.Name = "TxtNote";
+            TxtNote.ScrollBars = ScrollBars.Vertical;
             TxtNote.Size = new Size(288, 210);
             TxtNote.TabIndex = 4;
             // 
@@ -114,6 +116,7 @@
             GrvNotes.RowTemplate.Height = 25;
             GrvNotes.Size = new Size(289, 236);
             GrvNotes.TabIndex = 5;
+            GrvNotes.CellContentDoubleClick += GrvNotes_CellContentDoubleClick;
             // 
             // BtnRead
             // 
@@ -125,11 +128,21 @@
             BtnRead.UseVisualStyleBackColor = true;
             BtnRead.Click += BtnRead_Click;
             // 
+            // LblId
+            // 
+            LblId.AutoSize = true;
+            LblId.Location = new Point(51, 35);
+            LblId.Name = "LblId";
+            LblId.Size = new Size(0, 15);
+            LblId.TabIndex = 7;
+            LblId.Visible = false;
+            // 
             // NoteForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(668, 369);
+            Controls.Add(LblId);
             Controls.Add(BtnRead);
             Controls.Add(GrvNotes);
             Controls.Add(TxtNote);
@@ -139,7 +152,10 @@
             Controls.Add(BtnNew);
             Controls.Add(BtnDelete);
             Controls.Add(BtnSave);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "NoteForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Notes";
             FormClosing += NoteForm_FormClosing;
             Load += NoteForm_Load;
@@ -159,5 +175,6 @@
         private TextBox TxtNote;
         private DataGridView GrvNotes;
         private Button BtnRead;
+        private Label LblId;
     }
 }

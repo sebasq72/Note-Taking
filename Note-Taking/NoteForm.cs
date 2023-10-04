@@ -1,8 +1,6 @@
 using Newtonsoft.Json;
 using Note_Taking.Data;
-using System;
 using System.Data;
-using System.Text.Json.Serialization;
 
 namespace Note_Taking
 {
@@ -16,8 +14,6 @@ namespace Note_Taking
         {
             get { return GrvNotes.CurrentCell.RowIndex; }
         }
-
-
 
 
         public NoteForm()
@@ -40,7 +36,21 @@ namespace Note_Taking
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            table.Rows.Add(Guid.NewGuid(), TxtTitle.Text, TxtNote.Text);
+            if (LblId.Text == string.Empty)
+            {
+                table.Rows.Add(Guid.NewGuid(), TxtTitle.Text, TxtNote.Text);
+            }
+            else
+            {
+                string findById = string.Concat("Id='", LblId.Text, "'");
+                DataRow? dr = table.Select(findById).FirstOrDefault();
+
+                if (dr != null)
+                {
+                    dr["Title"] = TxtTitle.Text;
+                    dr["Message"] = TxtNote.Text;
+                }
+            }
 
             ClearTextBox();
         }
@@ -70,11 +80,12 @@ namespace Note_Taking
 
         private void BtnRead_Click(object sender, EventArgs e)
         {
-            if (table.Rows.Count > 0)
-            {
-                TxtTitle.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[1].ToString();
-                TxtNote.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[2].ToString();
-            }
+            ReadItemSelected();
+        }
+
+        private void GrvNotes_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ReadItemSelected();
         }
 
         private void NoteForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -105,6 +116,7 @@ namespace Note_Taking
 
         private void ClearTextBox()
         {
+            LblId.Text = string.Empty;
             TxtNote.Clear();
             TxtTitle.Clear();
         }
@@ -151,7 +163,18 @@ namespace Note_Taking
             File.WriteAllText(filePath, json);
         }
 
+        private void ReadItemSelected()
+        {
+            if (table.Rows.Count > 0)
+            {
+                LblId.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[0].ToString();
+                TxtTitle.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[1].ToString();
+                TxtNote.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[2].ToString();
+            }
+        }
+
         #endregion
+
 
 
     }
