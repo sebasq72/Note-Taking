@@ -34,7 +34,7 @@
             LblTitle = new Label();
             TxtTitle = new TextBox();
             LblNote = new Label();
-            TxtNote = new TextBox();
+            TxtMessage = new TextBox();
             GrvNotes = new DataGridView();
             BtnRead = new Button();
             LblId = new Label();
@@ -96,14 +96,14 @@
             LblNote.TabIndex = 3;
             LblNote.Text = "Note";
             // 
-            // TxtNote
+            // TxtMessage
             // 
-            TxtNote.Location = new Point(51, 82);
-            TxtNote.Multiline = true;
-            TxtNote.Name = "TxtNote";
-            TxtNote.ScrollBars = ScrollBars.Vertical;
-            TxtNote.Size = new Size(288, 210);
-            TxtNote.TabIndex = 4;
+            TxtMessage.Location = new Point(51, 82);
+            TxtMessage.Multiline = true;
+            TxtMessage.Name = "TxtMessage";
+            TxtMessage.ScrollBars = ScrollBars.Vertical;
+            TxtMessage.Size = new Size(288, 210);
+            TxtMessage.TabIndex = 4;
             // 
             // GrvNotes
             // 
@@ -145,7 +145,7 @@
             Controls.Add(LblId);
             Controls.Add(BtnRead);
             Controls.Add(GrvNotes);
-            Controls.Add(TxtNote);
+            Controls.Add(TxtMessage);
             Controls.Add(LblNote);
             Controls.Add(TxtTitle);
             Controls.Add(LblTitle);
@@ -172,7 +172,7 @@
         private Label LblTitle;
         private TextBox TxtTitle;
         private Label LblNote;
-        private TextBox TxtNote;
+        private TextBox TxtMessage;
         private DataGridView GrvNotes;
         private Button BtnRead;
         private Label LblId;

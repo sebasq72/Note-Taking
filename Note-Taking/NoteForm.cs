@@ -38,7 +38,7 @@ namespace Note_Taking
         {
             if (LblId.Text == string.Empty)
             {
-                table.Rows.Add(Guid.NewGuid(), TxtTitle.Text, TxtNote.Text);
+                table.Rows.Add(Guid.NewGuid(), TxtTitle.Text, TxtMessage.Text);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace Note_Taking
                 if (dr != null)
                 {
                     dr["Title"] = TxtTitle.Text;
-                    dr["Message"] = TxtNote.Text;
+                    dr["Message"] = TxtMessage.Text;
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Note_Taking
         private void ClearTextBox()
         {
             LblId.Text = string.Empty;
-            TxtNote.Clear();
+            TxtMessage.Clear();
             TxtTitle.Clear();
         }
 
@@ -169,7 +169,7 @@ namespace Note_Taking
             {
                 LblId.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[0].ToString();
                 TxtTitle.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[1].ToString();
-                TxtNote.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[2].ToString();
+                TxtMessage.Text = table.Rows[GrvNotesSelectedRowIndex].ItemArray[2].ToString();
             }
         }
 
